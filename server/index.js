@@ -5,13 +5,17 @@ const app = express();
 const path = require('path');
 
 // Construct the absolute path to the static assets folder using the `path.join()` method
-const pathToDistFolder = path.join(__dirname, '..', 'path', 'to', 'frontend', 'dist');
+const pathToDistFolder = path.join(__dirname, '..', 'vite-project', 'dist');
 
 // Create the middleware function for serving static assets
 const serveStatic = express.static(pathToDistFolder);
 
 // Use the middleware function to serve static assets
 app.use(serveStatic);
+
+
+
+/* FEEDBACK: Nice job setting up this middleware! */
 
 // Middleware function for logging route requests
 const logRoutes = (req, res, next) => {
@@ -24,32 +28,32 @@ app.use(logRoutes);
 
 // controllers
 const serveIndex = (req, res, next) => {
-    //sends html response with an html file
-    res.sendFile(__dirname + '/index.html');
-  }
+  //sends html response with an html file
+  res.sendFile(__dirname + '/index.html');
+}
 
-  const serveFunFact = (req, res, next) => {
-    //sends html response with raw html
-    res.send("<h3>Kellyne's favorite color is turquoise</h3>");
-  }
+const serveFunFact = (req, res, next) => {
+  //sends html response with raw html
+  res.send("<h3>Kellyne's favorite color is turquoise</h3>");
+}
 
-  const serveGreeting = (req, res, next) => {
-    //sends a data response
-    const greeting = req.query.greeting || "hello"
-    res.send(`Kellyne says ${greeting}!`);
-  }
+const serveGreeting = (req, res, next) => {
+  //sends a data response
+  const greeting = req.query.greeting || "hello"
+  res.send(`Kellyne says ${greeting}!`);
+}
 
-  const serveData = (req, res, next) => {
-    //sends a data response
-    const data = [{ name: 'Kellyne' }, { age: '19' }, { friends: ["Leah", "Mikayla"] }];
-    res.send(data);
-  }
-  
-  // endpoints
-  app.get('/', serveIndex);
-  app.get('/about', serveFunFact);
-  app.get('/api/greeting', serveGreeting);
-  app.get('/api/data', serveData);
+const serveData = (req, res, next) => {
+  //sends a data response
+  const data = [{ name: 'Kellyne' }, { age: '19' }, { friends: ["Leah", "Mikayla"] }];
+  res.send(data);
+}
+
+// endpoints
+app.get('/', serveIndex);
+app.get('/about', serveFunFact);
+app.get('/api/greeting', serveGreeting);
+app.get('/api/data', serveData);
 
 // listen
 const port = 8080;
